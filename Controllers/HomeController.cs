@@ -31,6 +31,7 @@ namespace Book_Store.Controllers
         [HttpPost]
         public IActionResult Register(Register register)
         {
+            var result = 1;
             string connectionString = Configuration["ConnectionStrings:MyConnection"];
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -39,20 +40,186 @@ namespace Book_Store.Controllers
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
-
+                    result = 0;
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
-
+            
             ViewBag.Result = 1;
             ViewBag.message = "User Registered sucessfully";
+            if(result == 0)
+            {
+                return View("Login");
+            }
             return View();
         }
         public IActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Login(Register register)
+        {
+            var num = 1;
+            var admin = false;
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"Select id, email, password From Register where email = '{register.email}' and password = '{register.password}'";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+
+                    connection.Open();
+                    var result = command.ExecuteScalar();
+                    if(result!=null){
+                        num = 0;
+                        if(register.email == "admin")
+                        {
+                            admin = true;
+                        }
+                    }
+                    
+                    ViewBag.user = register.email;
+                    connection.Close();
+                }
+
+            }
+            if(admin == true)
+            {
+                return View("Admin");
+            }
+            if (num == 0)
+            {
+                return View("Index");
+            }
+            return View();
+        }
+        public IActionResult Admin()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Admin(Books book)
+        {
+            var result = 1;
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"Insert Into Books (Book_Type, Name, Cost, Author, Discription) Values ('{book.Book_Type}', '{book.Name}','{book.Cost}','{book.Author}' ,'{book.Discription}')";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    result = 0;
+                    connection.Close();
+                }
+            }
+            if (result == 0)
+            {
+                ViewBag.message = "Row inserted sucessfully";
+            }
+            return View();
+        }
+        public IActionResult Activity_Book()
+        {
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            List<Books> activity_book = new List<Books>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Books where Book_Type = 'Activity'";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            activity_book.Add(new Books
+                            {
+                                Book_Id = Convert.ToInt32(sdr["Book_id"]),
+                                Book_Type = sdr["Book_Type"].ToString(),
+                                Name = sdr["Name"].ToString(),
+                                Cost= Convert.ToInt32(sdr["Cost"]),
+                                Author = sdr["Author"].ToString(),
+                                Discription = sdr["Discription"].ToString()
+                            });
+                        }
+                    }
+                    con.Close();
+                }
+            }
+
+            return View(activity_book);
+        }
+        public IActionResult Story_Book()
+        {
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            List<Books> activity_book = new List<Books>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Books where Book_Type = 'Story'";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            activity_book.Add(new Books
+                            {
+                                Book_Id = Convert.ToInt32(sdr["Book_id"]),
+                                Book_Type = sdr["Book_Type"].ToString(),
+                                Name = sdr["Name"].ToString(),
+                                Cost = Convert.ToInt32(sdr["Cost"]),
+                                Author = sdr["Author"].ToString(),
+                                Discription = sdr["Discription"].ToString()
+                            });
+                        }
+                    }
+                    con.Close();
+                }
+            }
+
+            return View(activity_book);
+        }
+        public IActionResult Study_Book()
+        {
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            List<Books> activity_book = new List<Books>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Books where Book_Type = 'Study'";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            activity_book.Add(new Books
+                            {
+                                Book_Id = Convert.ToInt32(sdr["Book_id"]),
+                                Book_Type = sdr["Book_Type"].ToString(),
+                                Name = sdr["Name"].ToString(),
+                                Cost = Convert.ToInt32(sdr["Cost"]),
+                                Author = sdr["Author"].ToString(),
+                                Discription = sdr["Discription"].ToString()
+                            });
+                        }
+                    }
+                    con.Close();
+                }
+            }
+
+            return View(activity_book);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
