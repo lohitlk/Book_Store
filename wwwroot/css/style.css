@@ -1,0 +1,263 @@
+@font-face {
+    font-family: titlefont;
+    src: url(ComicBoomBubbleDemo-rg44y.ttf);
+}
+body {
+	background: #5d802c;
+	color: #878785;
+	font-family: Arial;
+	font-size: 14px;
+	margin: 0;
+	min-width: 960px;
+	padding: 0;
+}
+a {
+	outline: none;
+}
+img {
+	border: 0;
+}
+#header {
+	background: #ffffff;
+	width: 100%;
+}
+#header div {
+	margin: 0 auto;
+	overflow: hidden;
+	width: 960px;
+}
+#header div img {
+	float: left;
+	margin-top: 15px;
+}
+#header div ul {
+	float: right;
+	list-style: none;
+	margin: 40px 0 0;
+	overflow: hidden;
+	padding: 0;
+}
+#header div ul li {
+	float: left;
+	padding: 0 5px;
+}
+
+#header div ul li a {
+	color: #495531;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+	width: 90px;
+}
+#header div ul li a:hover {
+	color: #82ae3f;
+}
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+#action-book{
+	text-decoration: none;
+	transform-origin: left;
+	transform: translate(-12%, -150%) rotate(8deg);
+
+}
+#action-book1{
+	font-size: 5em;
+	text-transform: uppercase;
+	color: #f7f7f7;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+	font-family: 'IM Fell English SC', serif;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 40px;
+
+}
+#story-book{
+	text-decoration: none;
+	transform-origin: left;
+	transform: translate(127%, 100%) rotate(4deg);
+
+}
+#story-book1{
+	text-transform: uppercase;
+	color: #f7f7f7;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+	text-decoration: none;
+	font-family: 'IM Fell English SC', serif;
+	font-weight: bold;
+	font-size: 45px;
+
+}
+#study-book{
+	
+	text-decoration: none;
+	transform-origin: left;
+	transform: translate(-10%, -480%) rotate(-10deg);
+
+}
+#study-book1{
+	text-transform: uppercase;
+	color: #f7f7f7;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
+	text-decoration: none;
+	font-family: 'IM Fell English SC', serif;
+	font-weight: bold;
+	font-size: 49px;
+
+}
+.logo{
+	margin-bottom: -500px;
+	font-family: 'IM Fell English SC', serif;
+	font-size: large;
+	padding-top: 50px;
+	margin-bottom: -50px;
+	transform: translate(50% 50%);
+	color: darkgreen;
+	width: 60px;
+	font-weight: bold;
+	text-decoration: none;
+	color : green;
+}
+#content {
+	background: #7cc116 url(../images/bg-content.gif) repeat-x top left;
+	color: #67695e;
+}
+#content div {
+	background: url(../images/bg-homepageindex.jpg) no-repeat top center;
+	min-height: 850px;
+	margin: 0 auto;
+	overflow: hidden;
+	width: 960px;
+}
+#content div div {
+	background: none;
+	float: right;
+	margin: 500px 0 0;
+	min-height: 0;
+	padding-right: 10px;
+	width: 460px;
+}
+#content div div h1, #content div div h2 {
+	color: #382d00;
+	font-size: 20px;
+	font-weight: normal;
+	margin: 0;
+}
+#content div div h2 {
+	padding-top: 25px;
+}
+#content div div p {
+	line-height: 23px;
+	padding-top: 5px;
+	text-align: justify;
+}
+#content div div p a, #footer div ul li p a {
+	color: #fdfd00;
+}
+
+div.content div {
+	margin: 0 auto;
+	width: 960px;
+}
+div.content div div {
+	padding-top: 10px;
+	overflow: hidden;
+	width: auto;
+}
+#footer {
+	border-top: 1px solid #a4dd50;
+	background-color: #a6ca73;
+	padding-top: 100px;
+}
+#footer div {
+	margin: 0 auto;
+	overflow: hidden;
+	width: 960px;
+}
+#footer div div {
+	float: left;
+	margin-left: 65px;
+	width: 175px;
+}
+#footer div div span {
+	color: #364818;
+	display: block;
+	font-size: 18px;
+	padding-bottom: 20px;
+}
+#footer div div a {
+	color: #314810;
+	display: block;
+	margin-bottom: 15px;
+	text-decoration: none;
+	text-indent: 70px;
+}
+#footer div ul {
+	float: right;
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 640px;
+}
+#footer div ul li p {
+	color: #ffffff;
+	line-height: 23px;
+	margin: 0;
+	padding: 0 35px;
+	text-align: justify;
+}
+#footer div ul li a.readmore {
+	color: #fefb00;
+	display: block;
+	padding: 5px 35px 0;
+	text-align: right;
+}
+#footer p.footnote {
+	color: #2a460c;
+	padding: 5px 0;
+	text-align: center;
+}
+#footer p.footnote a {
+	color: #314810;
+	text-decoration:none;
+}
