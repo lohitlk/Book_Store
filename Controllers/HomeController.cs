@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Book_Store.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using Book_Store.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace Book_Store.Controllers
 {
@@ -19,11 +21,6 @@ namespace Book_Store.Controllers
             Configuration = configuration;
         }
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
@@ -50,6 +47,7 @@ namespace Book_Store.Controllers
             }
 
             ViewBag.Result = 1;
+            ViewBag.message = "User Registered sucessfully";
             return View();
         }
         public IActionResult Login()
