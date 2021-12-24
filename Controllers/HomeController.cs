@@ -284,7 +284,7 @@ namespace Book_Store.Controllers
             }
             return View(cart);
         }
-        public IActionResult AddCart(int id, string user, int price, string sesion)
+        public IActionResult AddCart(int id, string user, int price)
         {
             string connectionString = Configuration["ConnectionStrings:MyConnection"];
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -328,6 +328,38 @@ namespace Book_Store.Controllers
         public IActionResult Sucess()
         {
             return View();
+        }
+        public IActionResult ViewBooks()
+        {
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            List<Books> book = new List<Books>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "select * from Books;";
+
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            book.Add(new Books
+                            {
+                                Book_Id = Convert.ToInt32(sdr["Book_id"]),
+                                Book_Type = sdr["Book_Type"].ToString(),
+                                Name = sdr["Name"].ToString(),
+                                Cost = Convert.ToInt32(sdr["Cost"]),
+                                Author = sdr["Author"].ToString(),
+                                Discription = sdr["Discription"].ToString()
+                            });
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return View(book);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

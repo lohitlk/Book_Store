@@ -29,7 +29,7 @@
             <b>About:</b> @Html.DisplayFor(modelItem => item.Discription)
         </p>
 
-        @using (Html.BeginForm("AddCart", "Home", new { Id = item.Book_Id, user = @httpContextAccessor.HttpContext.Session.GetString("User"), price = item.Cost, sesion = "Activity_Book" }, FormMethod.Post))
+        @using (Html.BeginForm("AddCart", "Home", new { Id = item.Book_Id, user = @httpContextAccessor.HttpContext.Session.GetString("User"), price = item.Cost }, FormMethod.Post))
         {
             <button class="btn btn-success">Add to Cart</button>
         }
