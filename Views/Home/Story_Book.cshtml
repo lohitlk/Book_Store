@@ -1,61 +1,41 @@
 ﻿@model IEnumerable<Book_Store.Models.Books>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 
 @{
     ViewData["Title"] = "Story_Book";
 }
 
 <h1>Story_Book</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Book_Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book_Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discription)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book_Type)
-            </td>
-            <td>
+<br />
+<br />
+@foreach (var item in Model)
+{
+    <div class="card">
+        <div class="container">
+            <h2 class="card-title">
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discription)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+            </h2>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Author: @Html.DisplayFor(modelItem => item.Author)
+            </h6>
+            <h6 class="card-subtitle mb-2 ">
+                Type: @Html.DisplayFor(modelItem => item.Book_Type)
+            </h6>
+
+            <h6 class="card-subtitle mb-2">
+                Cost: @Html.DisplayFor(modelItem => item.Cost) ₹
+            </h6>
+
+            <p class="card-text">
+                <b>About:</b> @Html.DisplayFor(modelItem => item.Discription)
+            </p>
+
+            @using (Html.BeginForm("AddCart", "Home", new { Id = item.Book_Id, user = @httpContextAccessor.HttpContext.Session.GetString("User"), price = item.Cost, sesion = "Activity_Book" }, FormMethod.Post))
+            {
+                <button class="btn btn-success">Add to Cart</button>
+            }
+        </div>
+    </div>
+    <br />
 }
-    </tbody>
-</table>

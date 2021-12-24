@@ -22,7 +22,11 @@ namespace Book_Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
             services.AddControllersWithViews();
         }
 
@@ -42,7 +46,7 @@ namespace Book_Store
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

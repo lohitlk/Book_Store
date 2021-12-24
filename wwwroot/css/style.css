@@ -55,11 +55,10 @@ img {
 	color: #82ae3f;
 }
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
-#action-book{
+#action-book {
 	text-decoration: none;
 	transform-origin: left;
-	transform: translate(-12%, -150%) rotate(8deg);
-
+	transform: translate(-12%, -270%) rotate(8deg);
 }
 #action-book1{
 	font-size: 5em;
@@ -88,7 +87,7 @@ img {
 #story-book{
 	text-decoration: none;
 	transform-origin: left;
-	transform: translate(127%, 100%) rotate(4deg);
+	transform: translate(127%, -12%) rotate(4deg);
 
 }
 #story-book1{
@@ -114,11 +113,14 @@ img {
 	font-size: 45px;
 
 }
+#headding {
+	transform: translate(65%, 200%);
+}
 #study-book{
 	
 	text-decoration: none;
 	transform-origin: left;
-	transform: translate(-10%, -480%) rotate(-10deg);
+	transform: translate(-10%, -580%) rotate(-10deg);
 
 }
 #study-book1{

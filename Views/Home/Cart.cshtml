@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Book_Store.Models.Books>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="container">
+                    <h2 class="card-title">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </h2>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Author: @Html.DisplayFor(modelItem => item.Author)
+                    </h6>
+                    <h6 class="card-subtitle mb-2 ">
+                        Type: @Html.DisplayFor(modelItem => item.Book_Type)
+                    </h6>
+
+                    <h6 class="card-subtitle mb-2">
+                        Cost: @Html.DisplayFor(modelItem => item.Cost) ₹
+                    </h6>
+
+                    <p class="card-text">
+                        <b>About:</b> @Html.DisplayFor(modelItem => item.Discription)
+                    </p>
+
+                </div>
+            </div>
+            <br />
+        }
+        <p style="color: aliceblue">Total cost:<h3 style="color:red">@ViewBag.Total</h3></p>
+        <h1><a asp-action="Checkout" value="" style="float: right; margin-top: -60px; color:aliceblue">proceed to Checkout</a></h1>

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace Book_Store.Controllers
 {
@@ -63,7 +64,9 @@ namespace Book_Store.Controllers
         public IActionResult Login(Register register)
         {
             var num = 1;
+            var userid = 0 ;
             var admin = false;
+            List<Login> user = new List<Login>();
             string connectionString = Configuration["ConnectionStrings:MyConnection"];
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -71,8 +74,16 @@ namespace Book_Store.Controllers
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
-
+                    command.Connection = connection;
                     connection.Open();
+                    using (SqlDataReader sdr = command.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            userid = Convert.ToInt32(sdr["id"]);
+                            HttpContext.Session.SetInt32("userid", userid);
+                        }
+                    }
                     var result = command.ExecuteScalar();
                     if(result!=null){
                         num = 0;
@@ -81,8 +92,7 @@ namespace Book_Store.Controllers
                             admin = true;
                         }
                     }
-                    
-                    ViewBag.user = register.email;
+                    HttpContext.Session.SetString("User", register.email);
                     connection.Close();
                 }
 
@@ -220,6 +230,104 @@ namespace Book_Store.Controllers
             }
 
             return View(activity_book);
+        }
+        public IActionResult Cart()
+        {
+            var user = this.HttpContext.Session.GetString("User");
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            List<Books> cart = new List<Books>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "select * from Books b, Cart c where c.user_email = @user and b.Book_Id = c.Book_id;";
+                
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user;
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            cart.Add(new Books
+                            {
+                                Book_Id = Convert.ToInt32(sdr["Book_id"]),
+                                Book_Type = sdr["Book_Type"].ToString(),
+                                Name = sdr["Name"].ToString(),
+                                Cost = Convert.ToInt32(sdr["Cost"]),
+                                Author = sdr["Author"].ToString(),
+                                Discription = sdr["Discription"].ToString()
+                            });
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "select sum(b.Cost) as total from Books b, Cart c  where c.user_email = @user and b.Book_Id = c.Book_id;";
+
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Parameters.Add("@user", SqlDbType.VarChar).Value = user;
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        while (sdr.Read())
+                        {
+                            ViewBag.Total = Convert.ToInt32(sdr["total"]); 
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return View(cart);
+        }
+        public IActionResult AddCart(int id, string user, int price, string sesion)
+        {
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"Insert Into Cart (cart_totalprice, Book_id, user_email) Values ('{price}', '{id}','{user}')";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return View("Index");
+        }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Checkout( UserDetails user)
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            string connectionString = Configuration["ConnectionStrings:MyConnection"];
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"Insert Into UserDetails (userdetails_name, userdetais_email, userdetails_address, userdetails_state, userdetails_pincode, id) Values ('{user.userdetails_name}', '{user.userdetais_email}','{user.userdetails_address}','{user.userdetails_state}', '{user.userdetails_pincode}', '{@userid}' )";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add("@userid", SqlDbType.VarChar).Value = userid;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return View("Sucess");
+        }
+        public IActionResult Sucess()
+        {
+            return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
