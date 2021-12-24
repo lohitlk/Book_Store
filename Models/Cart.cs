@@ -10,6 +10,6 @@ namespace Book_Store.Models
         public int cart_id { get; set; }
         public double cart_totalprice { get; set; }
         public int Book_id { get; set; }
-        public int user_id { get; set; }
+        public string user_email { get; set; }
     }
 }

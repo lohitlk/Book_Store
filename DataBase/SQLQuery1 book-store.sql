@@ -2,7 +2,7 @@ create table Register(
 id INT PRIMARY KEY IDENTITY (1, 1),
 name Varchar(255) NOT NULL,
 password Varchar(255) NOT NULL,
-email varchar(255) NOT NULL
+email varchar(255) NOT NULL unique
 );
 
 create table Books(
@@ -18,7 +18,7 @@ create table Cart(
 cart_id INT PRIMARY KEY IDENTITY (1, 1),
 cart_totalprice decimal NOT NULL,
 Book_id int FOREIGN KEY REFERENCES Books(Book_id),
-user_id int foreign key references Register(id)
+user_email varchar(255) foreign key references Register(email)
 );
 
 create table UserDetails(
